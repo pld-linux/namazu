@@ -68,7 +68,7 @@ Interfejs CGI do Namazu.
 %patch1 -p1
 
 %build
-autoconf
+%{__autoconf}
 %configure
 
 %{__make}
@@ -98,6 +98,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHORS ChangeLog ChangeLog.1 CREDITS COPYING HACKING HACKING-ja
 %doc INSTALL INSTALL-ja README README-es README-ja NEWS THANKS TODO
 %doc etc/namazu.png
+%dir %{_sysconfdir}/namazu
 %config %{_sysconfdir}/namazu/*
 %attr(755,root,root) %{_bindir}/namazu
 %attr(755,root,root) %{_bindir}/bnamazu
@@ -107,17 +108,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/nmzmerge
 %{_libdir}/*.so.*
 %{_mandir}/man1/*
-%{_datadir}/namazu/doc/*
-%{_datadir}/namazu/filter/*
-%{_datadir}/namazu/pl/*
-%{_datadir}/namazu/template/*
+%dir %{_datadir}/namazu
+%{_datadir}/namazu/doc
+%{_datadir}/namazu/filter
+%{_datadir}/namazu/pl
+%{_datadir}/namazu/template
 %dir %{_localstatedir}/namazu
 %dir %{_localstatedir}/namazu/index
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/nmz-config
-%{_includedir}/namazu/*.h
+%{_includedir}/namazu
 %{_libdir}/*.so
 %{_libdir}/*a
 
