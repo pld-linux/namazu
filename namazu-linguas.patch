@@ -1,0 +1,11 @@
+--- namazu-2.0.5.orig/configure.in	Wed Mar 21 01:18:47 2001
++++ namazu-2.0.5/configure.in	Wed Mar 21 01:19:12 2001
+@@ -88,7 +88,7 @@
+ dnl *
+ dnl * I18N
+ dnl *
+-ALL_LINGUAS="ja ja_JP.SJIS es fr"
++ALL_LINGUAS="ja es fr"
+ AM_GNU_GETTEXT
+ 
+ dnl Checks for libraries.

@@ -1,0 +1,131 @@
+--- namazu-2.0.6.orig/nmz/i18n.c	Sun Sep  2 16:13:37 2001
++++ namazu-2.0.6/nmz/i18n.c	Tue Sep 11 14:49:12 2001
+@@ -50,57 +50,49 @@
+  */
+ 
+ static const char *guess_category_value ( const char *categoryname );
+-static char *get_lang_by_category ( const char *categoryname );
+ 
+ 
+ /* The following is (partly) taken from the gettext package.
+-   Copyright (C) 1995, 1996, 1997, 1998 Free Software Foundation, Inc.  */
++   Copyright (C) 1995-1999, 2000, 2001 Free Software Foundation, Inc.  */
+ 
+ static const char *
+ guess_category_value (const char *categoryname)
+ {
++    const char *language;
+     const char *retval;
+ 
+     if (!strcmp(categoryname, "LC_MESSAGES")) {
+ 
+ 	/* The highest priority value is the `LANGUAGE' environment
+-	   variable.  This is a GNU extension.  */
+-	retval = getenv ("LANGUAGE");
+-	if (retval != NULL && retval[0] != '\0')
+-	    return retval;
++	   variable.  But we don't use the value if the currently selected
++	   locale is the C locale.  This is a GNU extension.  */
++	language = getenv ("LANGUAGE");
++	if (language != NULL && language[0] == '\0')
++	    language = NULL;
++    } else {
++	language = NULL;
+     }
+ 
+-    /* `LANGUAGE' is not set.  So we have to proceed with the POSIX
+-       methods of looking to `LC_ALL', `LC_xxx', and `LANG'.  On some
+-       systems this can be done by the `setlocale' function itself.  */
++    /* We have to proceed with the POSIX methods of looking to `LC_ALL',
++       `LC_xxx', and `LANG'.  On some systems this can be done by the
++       `setlocale' function itself.  */
+ 
+     /* Setting of LC_ALL overwrites all other.  */
+     retval = getenv ("LC_ALL");  
+-    if (retval != NULL && retval[0] != '\0')
+-	return retval;
+-
+-    /* Next comes the name of the desired category.  */
+-    retval = getenv (categoryname);
+-    if (retval != NULL && retval[0] != '\0')
+-	return retval;
+-
+-    /* Last possibility is the LANG environment variable.  */
+-    retval = getenv ("LANG");
+-    if (retval != NULL && retval[0] != '\0')
+-	return retval;
+-
+-    return NULL;
+-}
++    if (retval == NULL || retval[0] == '\0') {
++	/* Next comes the name of the desired category.  */
++	retval = getenv (categoryname);
++	if (retval == NULL || retval[0] == '\0') {
++	    /* Last possibility is the LANG environment variable.  */
++	    retval = getenv ("LANG");
++	    if (retval == NULL || retval[0] == '\0')
++		/* We use C as the default domain.  POSIX says this is
++		   implementation defined.  */
++		return "C";
++	}
++    }
+ 
+-static char *
+-get_lang_by_category(const char *categoryname) 
+-{
+-    char *lang;
+-    lang = (char *)guess_category_value(categoryname);
+-    if (lang == NULL)
+-	return "C";
+-    else
+-	return lang;
++    return language != NULL && strcmp (retval, "C") != 0 ? language : retval;
+ }
+ 
+ /*
+@@ -115,7 +107,7 @@
+     const char* env;
+ 
+     env = guess_category_value("LC_MESSAGES");
+-    if (env == NULL && *lang != '\0') {
++    if (env == "C" && lang[0] != '\0') {
+ #ifdef HAVE_SETENV
+ 	setenv("LANG", lang, 1);
+ #else
+@@ -145,13 +137,13 @@
+ char *
+ nmz_get_lang(void)
+ {
+-    return get_lang_by_category("LC_MESSAGES");
++    return (char *)guess_category_value("LC_MESSAGES");
+ }
+ 
+ char *
+ nmz_get_lang_ctype(void)
+ {
+-    return get_lang_by_category("LC_CTYPE");
++    return (char *)guess_category_value("LC_CTYPE");
+ }
+ 
+ /*
+--- namazu-2.0.6.orig/pl/util.pl	Fri Jul 27 11:19:43 2001
++++ namazu-2.0.6/pl/util.pl	Sat Aug 11 20:51:27 2001
+@@ -214,12 +214,17 @@
+ }
+ 
+ sub set_lang () {
+-    for my $cand (("LANGUAGE", "LC_ALL", "LC_MESSAGES", "LANG")) {
++    for my $cand (("LC_ALL", "LC_MESSAGES", "LANG")) {
+ 	if (defined($ENV{$cand})) {
+ 	    $util::LANG_MSG = $ENV{$cand};
+ 	    last;
+ 	}
+     }
++
++    if ($util::LANG_MSG ne "C" && defined($ENV{"LANGUAGE"})){
++	$util::LANG_MSG = $ENV{"LANGUAGE"};
++    }
++
+     for my $cand (("LC_ALL", "LC_CTYPE", "LANG")) {
+ 	if (defined($ENV{$cand})) {
+ 	    $util::LANG = $ENV{$cand};
