@@ -12,6 +12,7 @@ Patch0:		%{name}-linguas.patch
 Patch1:		%{name}-newgettext3.patch
 Patch2:		%{name}-emailaddress.patch
 Patch3:		%{name}-fixinutf8.patch
+Patch4:		%{name}-de.patch
 URL:		http://www.namazu.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -90,6 +91,7 @@ Interfejs CGI do Namazu.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__gettextize}
