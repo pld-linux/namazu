@@ -172,5 +172,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.a
 
 %files cgi
-%defattr(755,root,root,755)
-%{_cgidir}
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_cgidir}
