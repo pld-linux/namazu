@@ -23,7 +23,7 @@ BuildRequires:	perl-NKF >= 1.71
 BuildRequires:	perl-Text-Kakasi >= 1.00
 BuildRequires:	perl-Text-ChaSen >= 1.03
 BuildRequires:	perl-modules >= 5.6.0
-BuildRequires:  rpm-perlprov >= 4.1-13
+BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	kakasi >= 2.3.0
 Requires:	perl-File-MMagic >= 1.12
 Requires:	perl-NKF >= 1.71
@@ -128,8 +128,8 @@ rm -fr $RPM_BUILD_ROOT%{_datadir}/%{name}/etc
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post   -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
