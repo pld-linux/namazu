@@ -33,8 +33,8 @@ Requires:	perl-modules >= 5.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # XXX is this right - it was /var/lib before FHS macros
-%define _localstatedir  /var/lib
-%define _cgidir	%{_libexecdir}/%{name}
+%define		_localstatedir	/var/lib
+%define		_cgidir		%{_libexecdir}/%{name}
 
 %description
 Namazu is a full-text search engine software intended for easy use.
@@ -105,6 +105,7 @@ Interfejs CGI do Namazu.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+install -d $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -114,9 +115,9 @@ mv -f $RPM_BUILD_ROOT%{_sysconfdir}/namazu/namazurc-sample \
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/namazu/mknmzrc-sample \
 	$RPM_BUILD_ROOT%{_sysconfdir}/namazu/mknmzrc
 
-install -d $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 mv -f $RPM_BUILD_ROOT%{_libexecdir}/%{name}.cgi \
 	$RPM_BUILD_ROOT%{_libexecdir}/%{name}/%{name}.cgi
+
 install -d html
 mv -f $RPM_BUILD_ROOT%{_datadir}/%{name}/doc/* html/
 rm -fr $RPM_BUILD_ROOT%{_datadir}/%{name}/etc
