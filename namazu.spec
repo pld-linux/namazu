@@ -22,7 +22,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # XXX is this right - it was /var/lib before FHS macros
 %define _localstatedir	/var/lib
-%define _libexecdir	/home/httpd/cgi-bin
+%define _libexecdir	/home/services/httpd/cgi-bin
 
 %description
 Namazu is a full-text search engine software intended for easy use.
