@@ -14,6 +14,7 @@ Patch0:		%{name}-2.0.5-linguas.patch
 Patch1:		%{name}-2.0.6-newgettext3.patch
 Patch2:		%{name}-translation-pl.patch
 Patch3:		%{name}-emailaddress.patch
+Patch4:		%{name}-htmldoc.patch
 URL:		http://www.namazu.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -24,7 +25,7 @@ BuildRequires:	perl-NKF >= 1.71
 BuildRequires:	perl-Text-Kakasi >= 1.00
 BuildRequires:	perl-Text-ChaSen >= 1.03
 BuildRequires:	perl-modules >= 5.6.0
-BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:  rpm-perlprov >= 4.1-13
 Requires:	kakasi >= 2.3.0
 Requires:	perl-File-MMagic >= 1.12
 Requires:	perl-NKF >= 1.71
@@ -91,6 +92,7 @@ Interfejs CGI do Namazu.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %{__gettextize}
@@ -119,7 +121,10 @@ chmod a+rw -R $RPM_BUILD_ROOT%{_localstatedir}/namazu/index
 install -d $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 mv -f $RPM_BUILD_ROOT%{_libexecdir}/%{name}.cgi \
 	$RPM_BUILD_ROOT%{_libexecdir}/%{name}/%{name}.cgi
-
+install -d html
+mv -f $RPM_BUILD_ROOT%{_datadir}/%{name}/doc/* html/
+rm -fr $RPM_BUILD_ROOT%{_datadir}/%{name}/etc
+	
 %find_lang %{name}
 
 %clean
@@ -130,9 +135,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS CREDITS ChangeLog* NEWS README THANKS TODO etc/namazu.png
+%doc AUTHORS CREDITS ChangeLog* NEWS README THANKS TODO	
+%doc etc/namazu.png html
 %lang(es) %doc README-es
-%lang(ja) %doc README-ja
+%lang(ja) %doc README-ja 
 %attr(755,root,root) %{_bindir}/namazu
 %attr(755,root,root) %{_bindir}/bnamazu
 %attr(755,root,root) %{_bindir}/*nmz
@@ -145,7 +151,7 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/namazu/mknmzrc
 %{_mandir}/man1/*
 %dir %{_datadir}/namazu
-%{_datadir}/namazu/doc
+#%%{_datadir}/namazu/doc
 %{_datadir}/namazu/filter
 %{_datadir}/namazu/pl
 %{_datadir}/namazu/template
