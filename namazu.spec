@@ -1,3 +1,5 @@
+# TODO:	fix e-mail address (produces by configure script)
+#		in namazu templates	- now they contain webmaster@buildhostdomain
 %include	/usr/lib/rpm/macros.perl
 Summary:	Namazu - a full-text search engine
 Summary(pl):	Namazu - silnik pe³notekstowego przeszukiwania
@@ -17,22 +19,22 @@ BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	libtool
 BuildRequires:	perl-File-MMagic >= 1.12
-BuildRequires:	perl-NKF >= 1.70
+BuildRequires:	perl-NKF >= 1.71
 BuildRequires:	perl-Text-Kakasi >= 1.00
+BuildRequires:	perl-Text-ChaSen <= 1.03
 BuildRequires:	perl-modules >= 5.6.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	kakasi >= 2.3.0
 Requires:	perl-File-MMagic >= 1.12
-Requires:	perl-NKF >= 1.70
+Requires:	perl-NKF >= 1.71
 Requires:	perl-Text-Kakasi >= 1.00
+Requires:	perl-Text-ChaSen <= 1.03
 Requires:	perl-modules >= 5.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define	_noautoreq	'perl(Text::ChaSen)'
-
 # XXX is this right - it was /var/lib before FHS macros
 %define _localstatedir	/var/lib
-%define _libexecdir	/home/services/httpd/cgi-bin
+%define _cgidir	%{_libexecdir}/%{name}
 
 %description
 Namazu is a full-text search engine software intended for easy use.
@@ -75,7 +77,6 @@ Summary:	A CGI interface for Namazu
 Summary(pl):	Interfejs CGI do Namazu
 Group:		Applications/Text
 Requires:	%{name} = %{version}
-Requires:	webserver
 
 %description cgi
 A CGI interface for Namazu.
@@ -112,6 +113,10 @@ mv -f $RPM_BUILD_ROOT%{_sysconfdir}/namazu/mknmzrc-sample \
 	$RPM_BUILD_ROOT%{_sysconfdir}/namazu/mknmzrc
 chmod a+rw -R $RPM_BUILD_ROOT%{_localstatedir}/namazu
 chmod a+rw -R $RPM_BUILD_ROOT%{_localstatedir}/namazu/index
+
+install -d $RPM_BUILD_ROOT%{_libexecdir}/%{name}
+mv -f $RPM_BUILD_ROOT%{_libexecdir}/%{name}.cgi \
+	$RPM_BUILD_ROOT%{_libexecdir}/%{name}/%{name}.cgi
 
 %find_lang %{name}
 
@@ -157,5 +162,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/lib*.a
 
 %files cgi
-%defattr(644,root,root,755)
-%{_libexecdir}/namazu.cgi
+%defattr(755,root,root,755)
+%{_cgidir}
