@@ -1,5 +1,3 @@
-# TODO:	fix e-mail address (produces by configure script)
-#		in namazu templates	- now they contain webmaster@buildhostdomain
 %include	/usr/lib/rpm/macros.perl
 Summary:	Namazu - a full-text search engine
 Summary(pl):	Namazu - silnik pe³notekstowego przeszukiwania
@@ -35,7 +33,7 @@ Requires:	perl-modules >= 5.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # XXX is this right - it was /var/lib before FHS macros
-%define _localstatedir	/var/lib
+%define _localstatedir  /var/lib
 %define _cgidir	%{_libexecdir}/%{name}
 
 %description
@@ -115,8 +113,6 @@ mv -f $RPM_BUILD_ROOT%{_sysconfdir}/namazu/namazurc-sample \
 	$RPM_BUILD_ROOT%{_sysconfdir}/namazu/namazurc
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/namazu/mknmzrc-sample \
 	$RPM_BUILD_ROOT%{_sysconfdir}/namazu/mknmzrc
-chmod a+rw -R $RPM_BUILD_ROOT%{_localstatedir}/namazu
-chmod a+rw -R $RPM_BUILD_ROOT%{_localstatedir}/namazu/index
 
 install -d $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 mv -f $RPM_BUILD_ROOT%{_libexecdir}/%{name}.cgi \
@@ -130,8 +126,8 @@ rm -fr $RPM_BUILD_ROOT%{_datadir}/%{name}/etc
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post   -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -151,7 +147,6 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/namazu/mknmzrc
 %{_mandir}/man1/*
 %dir %{_datadir}/namazu
-#%%{_datadir}/namazu/doc
 %{_datadir}/namazu/filter
 %{_datadir}/namazu/pl
 %{_datadir}/namazu/template
