@@ -1,18 +1,17 @@
-diff -urN namazu-2.0.12.orig/configure namazu-2.0.12/configure
---- namazu-2.0.12.orig/configure	Tue Sep  3 07:18:08 2002
-+++ namazu-2.0.12/configure	Thu Sep  4 03:58:01 2003
-@@ -8909,48 +8909,18 @@
- fi
+diff -urN namazu-2.0.13.org/configure.in namazu-2.0.13/configure.in
+--- namazu-2.0.13.org/configure.in	2004-05-21 01:34:35.761418776 +0200
++++ namazu-2.0.13/configure.in	2004-05-21 01:37:48.254155432 +0200
+@@ -154,46 +154,10 @@
+ dnl *
+ dnl *  determine hostname and domainname
+ dnl *
++hostname=localhost
++domainname=localdomain
  
- 
--
--
--
--
-+changequote(<<, >>)
- #
- #   determine hostname and domainname
- #
+-changequote(<<, >>)
+-#
+-#   determine hostname and domainname
+-#
 -hostname="`uname -n 2>/dev/null |\
 -           awk '{ printf("%s", $1); }'`"
 -if test "x$hostname" = "x"; then
@@ -45,62 +44,8 @@ diff -urN namazu-2.0.12.orig/configure namazu-2.0.12/configure
 -        fi
 -    fi
 -fi
-+hostname=localhost
-+domainname=localdomain
- 
-+changequote([, ])
- 
--admin="webmaster@${hostname}${domainname}"
-+hostname=localhost
-+domainname=localdomain
-+admin="webmaster@OOPS-YOU-SHOULD-PUT-REAL-WEBMASTER-EMAIL-IN-YOUR-mknmzrc-BEFORE-INDEXING"
- echo $ac_n "checking for admin's email address""... $ac_c" 1>&6
- echo "configure:8956: checking for admin's email address" >&5
- echo "$ac_t""$admin" 1>&6
-diff -urN namazu-2.0.12.orig/configure.in namazu-2.0.12/configure.in
---- namazu-2.0.12.orig/configure.in	Tue Sep  3 07:17:05 2002
-+++ namazu-2.0.12/configure.in	Thu Sep  4 03:57:40 2003
-@@ -154,41 +154,12 @@
- #
- #   determine hostname and domainname
- #
--hostname="`uname -n 2>/dev/null |\
--           awk '{ printf("%s", $1); }'`"
--if test "x$hostname" = "x"; then
--    hostname="`hostname 2>/dev/null |\
--               awk '{ printf("%s", $1); }'`"
--    if test "x$hostname" = "x"; then
--        hostname='unknown'
--    fi
--fi
--case $hostname in
--    *.* )
--        domainname=".`echo $hostname | cut -d. -f2-`"
--        hostname="`echo $hostname | cut -d. -f1`"
--        ;;
--esac
--if test "x$domainname" = "x"; then
--    if test -f /etc/resolv.conf; then
--        domainname="`egrep '^[ 	]*domain' /etc/resolv.conf | head -1 |\
--                     sed -e 's/.*domain//' \
--                         -e 's/^[ 	]*//' -e 's/^ *//' -e 's/^	*//' \
--                         -e 's/^\.//' -e 's/^/./' |\
--                     awk '{ printf("%s", $1); }'`"
--        if test "x$domainname" = "x"; then
--            domainname="`egrep '^[ 	]*search' /etc/resolv.conf | head -1 |\
--                         sed -e 's/.*search//' \
--                             -e 's/^[ 	]*//' -e 's/^ *//' -e 's/^	*//' \
--                             -e 's/ .*//' -e 's/	.*//' \
--                             -e 's/^\.//' -e 's/^/./' |\
--                         awk '{ printf("%s", $1); }'`"
--        fi
--    fi
--fi
-+hostname=localhost
-+domainname=localdomain
-+
- changequote([, ])
- 
+-changequote([, ])
+-
 -admin="webmaster@${hostname}${domainname}"
 +admin="webmaster@OOPS-YOU-SHOULD-PUT-REAL-WEBMASTER-EMAIL-IN-YOUR-mknmzrc-BEFORE-INDEXING"
  AC_MSG_CHECKING(for admin's email address)
