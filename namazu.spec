@@ -3,7 +3,7 @@ Summary:	Namazu - a full-text search engine
 Summary(pl):	Namazu - silnik pe³notekstowego przeszukiwania
 Name:		namazu
 Version:	2.0.12
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications/Text
 Source0:	http://www.namazu.org/stable/%{name}-%{version}.tar.gz
@@ -30,6 +30,7 @@ Requires:	perl-NKF >= 1.71
 Requires:	perl-Text-Kakasi >= 1.00
 Requires:	perl-Text-ChaSen >= 1.03
 Requires:	perl-modules >= 5.6.0
+Conflicts:	mknmz-wwwoffle-0.7.2-1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # XXX is this right - it was /var/lib before FHS macros
