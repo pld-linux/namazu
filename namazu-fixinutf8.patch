@@ -1,0 +1,251 @@
+diff -uNr namazu-2.0.13/filter/Makefile.am utf8.namazu-2.0.13/filter/Makefile.am
+--- namazu-2.0.13/filter/Makefile.am	2003-08-24 19:41:55.000000000 +0900
++++ utf8.namazu-2.0.13/filter/Makefile.am	2004-04-15 16:12:10.000000000 +0900
+@@ -20,6 +20,8 @@
+ 	      hnf.pl \
+ 	      html.pl \
+ 	      mailnews.pl \
++	      langspec.txt \
++	      langspec.txt.utf8 \
+ 	      man.pl \
+ 	      mhonarc.pl \
+ 	      msword.pl \
+diff -uNr namazu-2.0.13/filter/Makefile.in utf8.namazu-2.0.13/filter/Makefile.in
+--- namazu-2.0.13/filter/Makefile.in	2004-04-14 03:09:02.000000000 +0900
++++ utf8.namazu-2.0.13/filter/Makefile.in	2004-04-15 16:13:32.000000000 +0900
+@@ -167,7 +167,9 @@
+               rtf.pl \
+               apachecache.pl \
+               macbinary.pl \
+-              mp3.pl
++              mp3.pl \
++	      langspec.txt \
++	      langspec.txt.utf8
+ 
+ 
+ EXTRA_DIST = $(filter_DATA)
+diff -uNr namazu-2.0.13/filter/hnf.pl utf8.namazu-2.0.13/filter/hnf.pl
+--- namazu-2.0.13/filter/hnf.pl	2001-11-29 18:31:43.000000000 +0900
++++ utf8.namazu-2.0.13/filter/hnf.pl	2004-04-15 16:12:10.000000000 +0900
+@@ -69,8 +69,10 @@
+ 
+     my $mark = "# ";
+     my $end  = "--";
+-    $mark = "¢£" if util::islang("ja");
+-    $end  = "¢ß" if util::islang("ja");
++    my $char = util::read_langspec_char_from_file ("./langspec.txt", "hnf.pl_filter_1");
++    $mark = $char if (util::islang("ja") && $char ne "");
++    $char = util::read_langspec_char_from_file ("./langspec.txt", "hnf.pl_filter_2");
++    $end = $char if (util::islang("ja") && $char ne "");
+ 
+     get_uri($cfile, $fields);
+     hnf_filter($contref, $weighted_str, $fields, $headings, $cfile, 
+diff -uNr namazu-2.0.13/filter/langspec.txt utf8.namazu-2.0.13/filter/langspec.txt
+--- namazu-2.0.13/filter/langspec.txt	1970-01-01 09:00:00.000000000 +0900
++++ utf8.namazu-2.0.13/filter/langspec.txt	2004-04-15 16:12:10.000000000 +0900
+@@ -0,0 +1,8 @@
++mailnews.pl_mailnews_citation_filter_1: (^\s*((([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(°£|°•|\.|°§|,|°¢|\@|°˜|§Œ)\s*){0,2}\s*(([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(§«§π|§»øΩ§∑§ﬁ§π|§»§‚§¶§∑§ﬁ§π|§»§§§§§ﬁ§π)(.{0,2})?\s*$)
++mailnews.pl_mailnews_citation_filter_2: (^\s*(Date:|Subject:|Message-ID:|From:|∑ÔÃæ|∫πΩ–øÕ|∆¸ª˛))|(^.+( ÷ªˆ§«§π|reply\s*§«§π|€©§Ø|§§§Ô§Ø|ΩÒ§≠§ﬁ§∑§ø|∏¿§§§ﬁ§∑§ø|œ√§«|wrote|said|writes|says)(.{0,2})?\s*$)|(^.*In .*(article|message))|(<\S+\@([\w\-.]\.)+\w+>)
++man.pl_man_filter_1: ^(?:NAME|Ãæ¡∞|ÃææŒ)\s*\n(.*?)\n\n
++man.pl_man_filter_2: \A(.+^(?:DESCRIPTION ≤Ú¿‚|DESCRIPTIONS?|SHELL GRAMMAR|INTRODUCTION|°⁄≥µÕ◊°€|≤Ú¿‚|¿‚Ã¿|µ°«Ω¿‚Ã¿|¥À‹µ°«Ω¿‚Ã¿)\s*\n)
++hnf.pl_filter_1: ¢£
++hnf.pl_filter_2: ¢ß
++gfilter.pl_line_adjust_filter: (°£|°¢)$
++wakati.pl_wakatize_japanese: (.+ )ÃæªÏ
+diff -uNr namazu-2.0.13/filter/langspec.txt.utf8 utf8.namazu-2.0.13/filter/langspec.txt.utf8
+--- namazu-2.0.13/filter/langspec.txt.utf8	1970-01-01 09:00:00.000000000 +0900
++++ utf8.namazu-2.0.13/filter/langspec.txt.utf8	2004-04-15 16:12:10.000000000 +0900
+@@ -0,0 +1,8 @@
++mailnews.pl_mailnews_citation_filter_1: (^\s*((([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(„ÄÇ|Ôºé|\.|Ôºå|,|„ÄÅ|\@|Ôº†|„ÅÆ)\s*){0,2}\s*(([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(„Åß„Åô|„Å®Áî≥„Åó„Åæ„Åô|„Å®„ÇÇ„ÅÜ„Åó„Åæ„Åô|„Å®„ÅÑ„ÅÑ„Åæ„Åô)(.{0,2})?\s*$)
++mailnews.pl_mailnews_citation_filter_2: (^\s*(Date:|Subject:|Message-ID:|From:|‰ª∂Âêç|Â∑ÆÂá∫‰∫∫|Êó•ÊôÇ))|(^.+(Ëøî‰∫ã„Åß„Åô|reply\s*„Åß„Åô|Êõ∞„Åè|„ÅÑ„Çè„Åè|Êõ∏„Åç„Åæ„Åó„Åü|Ë®Ä„ÅÑ„Åæ„Åó„Åü|Ë©±„Åß|wrote|said|writes|says)(.{0,2})?\s*$)|(^.*In .*(article|message))|(<\S+\@([\w\-.]\.)+\w+>)
++man.pl_man_filter_1: ^(?:NAME|ÂêçÂâç|ÂêçÁß∞)\s*\n(.*?)\n\n
++man.pl_man_filter_2: \A(.+^(?:DESCRIPTION Ëß£Ë™¨|DESCRIPTIONS?|SHELL GRAMMAR|INTRODUCTION|„ÄêÊ¶ÇË¶Å„Äë|Ëß£Ë™¨|Ë™¨Êòé|Ê©üËÉΩË™¨Êòé|Âü∫Êú¨Ê©üËÉΩË™¨Êòé)\s*\n)
++hnf.pl_filter_1: ‚ñ†
++hnf.pl_filter_2: ‚ñº
++gfilter.pl_line_adjust_filter: („ÄÇ|„ÄÅ)$
++wakati.pl_wakatize_japanese: (.+ )ÂêçË©û
+diff -uNr namazu-2.0.13/filter/mailnews.pl utf8.namazu-2.0.13/filter/mailnews.pl
+--- namazu-2.0.13/filter/mailnews.pl	2004-03-21 00:48:30.000000000 +0900
++++ utf8.namazu-2.0.13/filter/mailnews.pl	2004-04-15 16:12:10.000000000 +0900
+@@ -182,13 +182,23 @@
+     $$contref = "";
+ 
+     # Greeting at the beginning (first one or two lines)
++    my $regexp = util::read_langspec_char_from_file ("./langspec.txt", "mailnews.pl_mailnews_citation_filter_1");
+     for (my $i = 0; $i < 2 && defined($tmp[$i]); $i++) {
+-	if ($tmp[$i] =~ /(^\s*((([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(°£|°•|\.|°§|,|°¢|\@|°˜|§Œ)\s*){0,2}\s*(([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(§«§π|§»øΩ§∑§ﬁ§π|§»§‚§¶§∑§ﬁ§π|§»§§§§§ﬁ§π)(.{0,2})?\s*$)/) {
+-	    # for searching debug info by perl -n00e 'print if /^<<<</'
+-	    util::dprint("\n\n<<<<$tmp[$i]>>>>\n\n");
+-	    $omake .= $tmp[$i] . "\n";
+-	    $tmp[$i] = "";
+-        }
++	if ($regexp eq "") {
++	    if ($tmp[$i] =~ /(^\s*((([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(\.|,|\@)\s*){0,2}\s*(([\xa1-\xfe][\xa1-\xfe]){1,8}|([\x21-\x7e]{1,16}))\s*(.{0,2})?\s*$)/) {
++		# for searching debug info by perl -n00e 'print if /^<<<</'
++		util::dprint("\n\n<<<<$tmp[$i]>>>>\n\n");
++		$omake .= $tmp[$i] . "\n";
++		$tmp[$i] = "";
++            }
++	} else {
++	    if ($tmp[$i] =~ /$regexp/) {
++		# for searching debug info by perl -n00e 'print if /^<<<</'
++		util::dprint("\n\n<<<<$tmp[$i]>>>>\n\n");
++		$omake .= $tmp[$i] . "\n";
++		$tmp[$i] = "";
++            }
++	}
+     }
+ 
+     # Isolate citation parts.
+@@ -213,11 +223,22 @@
+         # Process only first five paragrahs.
+ 	# And don't handle the paragrah which has five or longer lines.
+ 	# Hmm, this regex looks very hairly.
+-	if ($i < 5 && ($line =~ tr/\n/\n/) <= 5 && $line =~ /(^\s*(Date:|Subject:|Message-ID:|From:|∑ÔÃæ|∫πΩ–øÕ|∆¸ª˛))|(^.+( ÷ªˆ§«§π|reply\s*§«§π|€©§Ø|§§§Ô§Ø|ΩÒ§≠§ﬁ§∑§ø|∏¿§§§ﬁ§∑§ø|œ√§«|wrote|said|writes|says)(.{0,2})?\s*$)|(^.*In .*(article|message))|(<\S+\@([\w\-.]\.)+\w+>)/im) {
+-	    util::dprint("\n\n<<<<$line>>>>\n\n");
+-	    $omake .= $line . "\n";
+-	    $line = "";
+-	    next;
++	$regexp = util::read_langspec_char_from_file ("./langspec.txt", "mailnews.pl_mailnews_citation_filter_2");
++
++	if ($regexp eq "") {
++	    if ($i < 5 && ($line =~ tr/\n/\n/) <= 5 && $line =~ /(^\s*(Date:|Subject:|Message-ID:|From:))|(^.+(wrote|said|writes|says)(.{0,2})?\s*$)|(^.*In .*(article|message))|(<\S+\@([\w\-.]\.)+\w+>)/im) {
++		util::dprint("\n\n<<<<$line>>>>\n\n");
++		$omake .= $line . "\n";
++		$line = "";
++		next;
++	    }
++        } else {
++	    if ($i < 5 && ($line =~ tr/\n/\n/) <= 5 && $line =~ /$regexp/im) {
++		util::dprint("\n\n<<<<$line>>>>\n\n");
++		$omake .= $line . "\n";
++		$line = "";
++		next;
++	    }
+ 	}
+ 	$$contref .= $line. "\n\n";
+         $i++;
+diff -uNr namazu-2.0.13/filter/man.pl utf8.namazu-2.0.13/filter/man.pl
+--- namazu-2.0.13/filter/man.pl	2002-02-13 16:39:14.000000000 +0900
++++ utf8.namazu-2.0.13/filter/man.pl	2004-04-15 16:12:10.000000000 +0900
+@@ -140,17 +140,36 @@
+     my $weight = $conf::Weight{'html'}->{'title'};
+     $$weighted_str .= "\x7f$weight\x7f$title\x7f/$weight\x7f\n";
+ 
+-    if ($$contref =~ /^(?:NAME|Ãæ¡∞|ÃææŒ)\s*\n(.*?)\n\n/ms) {
+-	$name = "$1::\n";
+-	$weight = $conf::Weight{'html'}->{'h1'};
+-	$$weighted_str .= "\x7f$weight\x7f$1\x7f/$weight\x7f\n";
++    my $regexp = util::read_langspec_char_from_file ("./langspec.txt", "man.pl_man_filter_1");
++
++    if ($regexp eq "") {
++	if ($$contref =~ /^(?:NAME)\s*\n(.*?)\n\n/ms) {
++	    $name = "$1::\n";
++	    $weight = $conf::Weight{'html'}->{'h1'};
++	    $$weighted_str .= "\x7f$weight\x7f$1\x7f/$weight\x7f\n";
++	}
++    } else {
++	if ($$contref =~ /$regexp/ms) {
++	    $name = "$1::\n";
++	    $weight = $conf::Weight{'html'}->{'h1'};
++	    $$weighted_str .= "\x7f$weight\x7f$1\x7f/$weight\x7f\n";
++	}
+     }
+ 
+-    if ($$contref =~ 
+-	s/\A(.+^(?:DESCRIPTION ≤Ú¿‚|DESCRIPTIONS?|SHELL GRAMMAR|INTRODUCTION|°⁄≥µÕ◊°€|≤Ú¿‚|¿‚Ã¿|µ°«Ω¿‚Ã¿|¥À‹µ°«Ω¿‚Ã¿)\s*\n)//ims) 
+-    {
+-	$$contref = $name . $$contref;
+-	$$weighted_str .= "\x7f1\x7f$1\x7f/1\x7f\n";
++    $regexp = util::read_langspec_char_from_file ("./langspec.txt", "man.pl_man_filter_2");
++
++    if ($regexp eq "") {
++	if ($$contref =~ 
++	    s/\A(.+^(?:DESCRIPTIONS?|SHELL GRAMMAR|INTRODUCTION)\s*\n)//ims) 
++	{
++	    $$contref = $name . $$contref;
++	    $$weighted_str .= "\x7f1\x7f$1\x7f/1\x7f\n";
++	}
++    } else {
++	if ($$contref =~ s/$regexp//ims) {
++	    $$contref = $name . $$contref;
++	    $$weighted_str .= "\x7f1\x7f$1\x7f/1\x7f\n";
++	}
+     }
+ }
+ 
+diff -uNr namazu-2.0.13/pl/gfilter.pl utf8.namazu-2.0.13/pl/gfilter.pl
+--- namazu-2.0.13/pl/gfilter.pl	2004-01-31 03:28:19.000000000 +0900
++++ utf8.namazu-2.0.13/pl/gfilter.pl	2004-04-15 16:12:10.000000000 +0900
+@@ -90,13 +90,14 @@
+     return undef unless defined($$text);
+ 
+     my @tmp = split(/\n/, $$text);
++    my $regexp = util::read_langspec_char_from_file ("../filter/langspec.txt", "gfilter.pl_line_adjust_filter");
+     for my $line (@tmp) {
+ 	$line .= "\n";
+ 	$line =~ s/^[ \>\|\#\:]+//;
+ 	$line =~ s/ +$//;
+ 	$line =~ s/\n// if (($line =~ /[\xa1-\xfe]\n*$/) &&
+ 			    (length($line) >=40));
+-	$line =~ s/(°£|°¢)$/$1\n/;
++	$line =~ s/$regexp/$1\n/ if ($regexp ne "");
+ 	$line =~ s/([a-z])-\n/$1/;  # for hyphenation.
+     }
+     $$text = join('', @tmp);
+diff -uNr namazu-2.0.13/pl/util.pl utf8.namazu-2.0.13/pl/util.pl
+--- namazu-2.0.13/pl/util.pl	2004-03-19 00:54:09.000000000 +0900
++++ utf8.namazu-2.0.13/pl/util.pl	2004-04-15 16:12:10.000000000 +0900
+@@ -331,4 +331,36 @@
+     }
+ }
+ 
++sub read_langspec_char_from_file ($$) {
++    my ($file, $func) = @_;
++
++    require I18N::Langinfo;
++
++    I18N::Langinfo->import (qw (langinfo CODESET));
++
++    my $locale_encoding = langinfo (CODESET ());
++
++    if (defined $locale_encoding && $locale_encoding eq 'UTF-8') {
++	$locale_encoding = ".utf8";
++    } else {
++	$locale_encoding = "";
++    }
++
++    my $fh = util::fopen ($file . $locale_encoding) || print "\n\n$file$locale_encoding can't read.\n\n" && return "";
++    my @regexp = <$fh>;
++    my $retval = "";
++    $fh->close;
++
++    for my $regexp (@regexp) {
++	if ($regexp =~ /^$func: (.*)$/) {
++	    $retval = $1;
++	}
++    }
++
++    if ($retval eq "") {
++	util::dprint ("\n\n$file$locale_encoding has no entry for $func\n\n");
++    }
++    return $retval;
++}
++
+ 1;
+diff -uNr namazu-2.0.13/pl/wakati.pl utf8.namazu-2.0.13/pl/wakati.pl
+--- namazu-2.0.13/pl/wakati.pl	2004-03-04 16:25:57.000000000 +0900
++++ utf8.namazu-2.0.13/pl/wakati.pl	2004-04-15 16:12:48.000000000 +0900
+@@ -53,8 +53,10 @@
+     # Collect only noun words when -m option is specified.
+     if ($var::Opt{'noun'}) {
+ 	$$content = "";
+-	$$content .= shift(@tmp) =~ /(.+ )\xcc\xbe\xbb\xec/ ? $1 : "" while @tmp; 
+-	# noun (meisi) in Japanese "cc be bb ec"
++ 	my $regexp = util::read_langspec_char_from_file ("../filter/langspec.txt", "wakati.pl_wakatize_japanese");
++ 	if ($regexp ne "") {
++ 	    $$content .= shift(@tmp) =~ /$regexp/ ? $1 : "" while @tmp; 
++ 	}
+     } else {
+ 	$$content = join("\n", @tmp);
+     }
