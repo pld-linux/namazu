@@ -21,14 +21,14 @@ BuildRequires:	libtool
 BuildRequires:	perl-File-MMagic >= 1.12
 BuildRequires:	perl-NKF >= 1.71
 BuildRequires:	perl-Text-Kakasi >= 1.00
-BuildRequires:	perl-Text-ChaSen <= 1.03
+BuildRequires:	perl-Text-ChaSen >= 1.03
 BuildRequires:	perl-modules >= 5.6.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	kakasi >= 2.3.0
 Requires:	perl-File-MMagic >= 1.12
 Requires:	perl-NKF >= 1.71
 Requires:	perl-Text-Kakasi >= 1.00
-Requires:	perl-Text-ChaSen <= 1.03
+Requires:	perl-Text-ChaSen >= 1.03
 Requires:	perl-modules >= 5.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
