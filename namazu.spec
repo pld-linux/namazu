@@ -94,6 +94,7 @@ Interfejs CGI do Namazu.
 %patch4 -p1
 
 %build
+rm -rf File-MMagic
 %{__gettextize}
 %{__libtoolize}
 %{__aclocal}
