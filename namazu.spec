@@ -6,6 +6,7 @@ Release:	1
 License:	GPL
 Group:		Applications/Text
 Source0:	http://www.namazu.org/stable/%{name}-%{version}.tar.gz
+# Source0-md5:	85892f930e5ef694f39469f136f484b4
 Patch0:		%{name}-2.0.5-linguas.patch
 Patch1:		%{name}-2.0.6-newgettext3.patch
 URL:		http://www.namazu.org/
