@@ -1,0 +1,11 @@
+diff -urN namazu-2.0.13.org/filter/mailnews.pl namazu-2.0.13/filter/mailnews.pl
+--- namazu-2.0.13.org/filter/mailnews.pl	2004-06-20 13:57:45.727448920 +0200
++++ namazu-2.0.13/filter/mailnews.pl	2004-06-20 13:58:46.593195920 +0200
+@@ -209,6 +209,7 @@
+     $$contref = "";
+     my $i = 0;
+     for my $line (@tmp) {
++	use bytes;
+ 	# Complete excluding is impossible. I tnink it's good enough.
+         # Process only first five paragrahs.
+ 	# And don't handle the paragrah which has five or longer lines.
