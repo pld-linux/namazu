@@ -1,4 +1,5 @@
-Summary:	Namazu is a full-text search engine
+%include	/usr/lib/rpm/macros.perl
+Summary:	Namazu - a full-text search engine
 Summary(pl):	Namazu - silnik pe³notekstowego przeszukiwania
 Name:		namazu
 Version:	2.0.10
@@ -11,14 +12,19 @@ Patch0:		%{name}-2.0.5-linguas.patch
 Patch1:		%{name}-2.0.6-newgettext3.patch
 URL:		http://www.namazu.org/
 BuildRequires:	autoconf
-BuildRequires:	perl >= 5.6.0
+BuildRequires:	automake
+BuildRequires:	gettext-devel
+BuildRequires:	libtool
+BuildRequires:	perl-File-MMagic >= 1.12
 BuildRequires:	perl-NKF >= 1.70
 BuildRequires:	perl-Text-Kakasi >= 1.00
+BuildRequires:	perl-modules >= 5.6.0
+BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	kakasi >= 2.3.0
-Requires:	perl >= 5.6.0
 Requires:	perl-File-MMagic >= 1.12
 Requires:	perl-NKF >= 1.70
 Requires:	perl-Text-Kakasi >= 1.00
+Requires:	perl-modules >= 5.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 # XXX is this right - it was /var/lib before FHS macros
@@ -38,16 +44,28 @@ Namazu to silnik pe³notekstowego przeszukiwania zrobiony z my¶l± o
 przeszukiwania dla lokalnego dysku.
 
 %package devel
-Summary:	Libraries and include files of Namazu
-Summary(pl):	Biblioteki i pliki nag³ówkowe Namazu
+Summary:	Header files for Namazu
+Summary(pl):	Pliki nag³ówkowe Namazu
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
 %description devel
-Libraries and include files of Namazu.
+Header files for Namazu.
 
 %description devel -l pl
-Biblioteki i pliki nag³ówkowe Namazu.
+Pliki nag³ówkowe Namazu.
+
+%package static
+Summary:	Static Namazu library
+Summary(pl):	Statyczna biblioteka Namazu
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+
+%description static
+Static Namazu library.
+
+%description static -l pl
+Statyczna biblioteka Namazu.
 
 %package cgi
 Summary:	A CGI interface for Namazu
@@ -68,7 +86,12 @@ Interfejs CGI do Namazu.
 %patch1 -p1
 
 %build
+%{__gettextize}
+%{__libtoolize}
+%{__aclocal}
 %{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
 
 %{__make}
@@ -76,7 +99,8 @@ Interfejs CGI do Namazu.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%makeinstall
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/namazu/namazurc-sample \
 	$RPM_BUILD_ROOT%{_sysconfdir}/namazu/namazurc
@@ -95,18 +119,19 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog ChangeLog.1 CREDITS COPYING HACKING HACKING-ja
-%doc INSTALL INSTALL-ja README README-es README-ja NEWS THANKS TODO
-%doc etc/namazu.png
-%dir %{_sysconfdir}/namazu
-%config %{_sysconfdir}/namazu/*
+%doc AUTHORS CREDITS ChangeLog* NEWS README THANKS TODO etc/namazu.png
+%lang(es) %doc README-es
+%lang(ja) %doc README-ja
 %attr(755,root,root) %{_bindir}/namazu
 %attr(755,root,root) %{_bindir}/bnamazu
 %attr(755,root,root) %{_bindir}/*nmz
 %attr(755,root,root) %{_bindir}/mailutime
 %attr(755,root,root) %{_bindir}/nmzgrep
 %attr(755,root,root) %{_bindir}/nmzmerge
-%{_libdir}/*.so.*
+%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%dir %{_sysconfdir}/namazu
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/namazu/namazurc
+%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/namazu/mknmzrc
 %{_mandir}/man1/*
 %dir %{_datadir}/namazu
 %{_datadir}/namazu/doc
@@ -119,9 +144,13 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/nmz-config
+%attr(755,root,root) %{_libdir}/lib*.so
+%{_libdir}/lib*.la
 %{_includedir}/namazu
-%{_libdir}/*.so
-%{_libdir}/*a
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/lib*.a
 
 %files cgi
 %defattr(644,root,root,755)
