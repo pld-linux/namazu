@@ -1,0 +1,396 @@
+diff -urN namazu-2.0.12.orig/template/Makefile.am namazu-2.0.12/template/Makefile.am
+--- namazu-2.0.12.orig/template/Makefile.am	Tue Aug 26 23:28:18 2003
++++ namazu-2.0.12/template/Makefile.am	Tue Aug 26 23:38:47 2003
+@@ -28,7 +28,13 @@
+ 	NMZ.head.fr \
+ 	NMZ.result.normal.fr \
+ 	NMZ.result.short.fr \
+-	NMZ.tips.fr
++	NMZ.tips.fr \
++	NMZ.body.pl \
++	NMZ.foot.pl \
++	NMZ.head.pl \
++	NMZ.result.normal.pl \
++	NMZ.result.short.pl \
++	NMZ.tips.pl
+ 
+ 
+ EXTRA_DIST = $(template_DATA)
+diff -urN namazu-2.0.12.orig/template/Makefile.in namazu-2.0.12/template/Makefile.in
+--- namazu-2.0.12.orig/template/Makefile.in	Tue Aug 26 23:28:18 2003
++++ namazu-2.0.12/template/Makefile.in	Tue Aug 26 23:35:35 2003
+@@ -119,7 +119,7 @@
+ 
+ templatedir = $(pkgdatadir)/template
+ 
+-template_DATA =  	NMZ.body 	NMZ.body.ja 	NMZ.foot 	NMZ.foot.ja 	NMZ.head 	NMZ.head.ja 	NMZ.result.normal 	NMZ.result.short 	NMZ.result.normal.ja 	NMZ.result.short.ja 	NMZ.tips 	NMZ.tips.ja 	NMZ.body.es 	NMZ.head.es 	NMZ.result.short.es 	NMZ.foot.es 	NMZ.result.normal.es 	NMZ.tips.es 	NMZ.body.fr 	NMZ.foot.fr 	NMZ.head.fr 	NMZ.result.normal.fr 	NMZ.result.short.fr 	NMZ.tips.fr
++template_DATA =  	NMZ.body 	NMZ.body.ja 	NMZ.foot 	NMZ.foot.ja 	NMZ.head 	NMZ.head.ja 	NMZ.result.normal 	NMZ.result.short 	NMZ.result.normal.ja 	NMZ.result.short.ja 	NMZ.tips 	NMZ.tips.ja 	NMZ.body.es 	NMZ.head.es 	NMZ.result.short.es 	NMZ.foot.es 	NMZ.result.normal.es 	NMZ.tips.es 	NMZ.body.fr 	NMZ.foot.fr 	NMZ.head.fr 	NMZ.result.normal.fr 	NMZ.result.short.fr 	NMZ.tips.fr		NMZ.body.pl 	NMZ.foot.pl 	NMZ.head.pl 	NMZ.result.normal.pl 	NMZ.result.short.pl 	NMZ.tips.pl
+ 
+ 
+ EXTRA_DIST = $(template_DATA)
+diff -urN namazu-2.0.12.orig/template/NMZ.body.pl namazu-2.0.12/template/NMZ.body.pl
+--- namazu-2.0.12.orig/template/NMZ.body.pl	Thu Jan  1 01:00:00 1970
++++ namazu-2.0.12/template/NMZ.body.pl	Tue Aug 26 00:34:06 2003
+@@ -0,0 +1,178 @@
++<h2><a name="query">Zapytania</a></h2>
++
++<h3><a name="query-term">Zapytanie pojedyñcze</a></h3>
++<p>
++To zapytanie wyszczególnia tylko jedno okre¶lenie dla wyszukiwania wszystkich
++dokumentów, które zawieraj± to okre¶lenie, np.:
++</p>
++
++<p class="example">
++namazu
++</p>
++
++<h3><a name="query-and">Zapytanie typu AND</a></h3>
++
++<p>
++To zapytanie wyszczególnia 2 lub wiêcej okre¶leñ dla wyszukiwania wszystkich
++dokumentów, które zawieraj± wszystkie podane okre¶lenia. Mo¿esz wpisaæ operator
++<code class="operator">and</code> pomiêdzy dwoma lub wiêcej okre¶leniami, np.:
++</p>
++
++<p class="example">
++Linux and Netscape
++</p>
++
++<p>
++Mo¿esz pomin±æ operator
++<code class="operator">and</code> .
++Okre¶lenia, które s± oddzielone jedn± lub wiêcej spacj± s± uwa¿ane za zapytanie typu AND.
++</p>
++
++<h3><a name="query-or">Zapytanie typu OR</a></h3>
++<p>
++To zapytanie wyszczególnia 2 lub wiêcej okre¶leñ dla wyszukiwania wszystkich
++dokumentów, które zawieraj± jakiekolwiek z podanych okre¶leñ. Mo¿esz wpisaæ operator
++<code class="operator">or</code> pomiêdzy dwoma lub wiêcej okre¶leniami, np.:
++</p>
++
++<p class="example">
++Linux or FreeBSD
++</p>
++
++<h3><a name="query-not">Zapytanie typu NOT</a></h3>
++<p>
++To zapytanie wyszczególnia 2 lub wiêcej okre¶leñ dla wyszukiwania wszystkich
++dokumentów, które zawieraj± pierwsze okre¶lenie, ale nie zawieraj±
++nastêpnych okre¶leñ. Mo¿esz wpisaæ operator <code class="operator">not</code>
++ pomiêdzy dwoma lub wiêcej okre¶leniami, np.:
++</p>
++
++<p class="example">
++Linux not UNIX
++</p>
++
++
++<h3><a name="query-grouping">Grupowanie</a></h3>
++<p>
++Mo¿esz grupowaæ zapytania przez zawarcie ich
++w nawiasach okrag³ych. Nawiasy powinny byæ oddzielone przez jedn± lub
++wiêcej spacji, np.:
++</p>
++
++<p class="example">
++( Linux or FreeBSD ) and Netscape not Windows
++</p>
++
++<h3><a name="query-phrase">Wyszukiwanie fraz</a></h3>
++<p>
++Mo¿esz szukaæ wyra¿enia, które sk³ada siê z dwóch lub wiêcej okre¶leñ
++otaczaj±c je podwójnym cudzys³owem jak
++<code class="operator">"..."</code> lub klamrami jak <code class="operator">{...}</code>.
++Precyzja Namazu  w wyszukiwaniu fraz nie jest 100%,
++lecz b³êdne wyniki trafiaj± siê bardzo rzadko, np.:
++</p>
++
++<p class="example">
++{GNU Emacs}
++</p>
++
++<!-- foo
++<p>
++You must choose the latter with Tkanamzu or namazu.el.
++Musisz wybraæ ten ostatni z  Tkanamzu lub namazu.el. ???
++</p>
++-->
++
++<h3><a name="query-substring">Wyszukiwanie okrojonych s³ów</a></h3>
++<p>
++S± trzy typy wyszukiwania okrojonych s³ów.
++</p>
++
++<dl>
++<dt>Przedrostkowe dopasowanie
++<dd><code class="example">inter*</code> (okre¶lenia rozpoczynaj±ce siê na <code>inter</code>)
++<dt>Wewnêtrzne dopasowanie
++<dd><code class="example">*text*</code> (okre¶lenia zawieraj±ce siê wewn±trz <code>text</code>)
++<dt>Przyrostkowe dopasowanie
++<dd><code class="example">*net</code> (okre¶lenia koñcz±ce siê na <code>net</code>)
++</dl>
++
++
++<h3><a name="query-regex">Wyra¿enia regularne (man grep)</a></h3>
++
++<p>
++Mo¿esz u¿ywaæ wyra¿eñ regularnych jako wzór do dopasowywania.
++Wyra¿enia regularne musz± byæ otoczone przez uko¶niki tak, jak
++<code
++class="operator">/.../</code>. Namazu wykorzystuje silnik wyra¿eñ regularnych
++<ahref="http://www.ruby-lang.org/">Ruby</a>. Ogólnie jest on kompatybilny z <a
++href="http://www.perl.com/">Perl</a> ,
++np.:
++</p>
++
++<p class="example">
++/pro(gram|blem)s?/
++</p>
++
++
++<h3><a name="query-field">Wyszukiwanie po wyspecyfikowanych polach</a></h3>
++<p>
++Mo¿esz ograniczyæ przeszukiwanie do okre¶lonych pól jak
++<code>Subject:</code>, <code>From:</code>,
++<code>Message-Id:</code>. Jest to zw³aszcza dogodne dla dokumentów typu
++Mail/News, np.:
++</p>
++
++<ul>
++<li><code class="example">+subject:Linux</code><br>
++(Zwraca wszystkie dokument zawieraj±ce pola <code>Linux</code>
++w <code>Subject:</code> )
++
++<li><code class="example">+subject:"GNU Emacs"</code><br>
++(Zwraca wszystkie dokumenty zawieraj±ce pola <code>GNU Emacs</code>
++w <code>Subject:</code> )
++
++<li><code class="example">+from:foo@bar.jp</code><br>
++(Zwraca wszystkie dokument zawieraj±ce pola <code>foo@bar.jp</code>
++w <code>From:</code> )
++
++
++<li><code class="example">+message-id:&lt;199801240555.OAA18737@foo.bar.jp&gt;</code><br>
++(Zwraca pewien dokument zawieraj±cy wyszczególnione
++<code>Message-Id:</code>)
++</ul>
++
++<h3><a name="query-notes">Uwagi</a></h3>
++
++<ul>
++<li>We wszystkich zapytaniach, Namazu ignoruje wielko¶æ znaków alfabetu.
++
++<li>Frazy japoñskie s± automatycznie dzielone na morfeny i traktowane jak
++<a href="#query-phrase">wyszukiwanie fraz</a>. Ten proces powoduje czasami
++b³±d invalid segmentation.
++
++<li>Znaki alfabetu, liczby i czê¶æ z symboli (zduplikowane w ASCII),
++które s± zdefiniowane w JIS X 0208 (Japanese Industrial Standards) s± traktowane jak znaki ASCII.
++
++<li>Namazu radzi sobie z okre¶leniami zawieraj±cymi znaki takie jak
++<code>TCP/IP</code>, ale to radzenie sobie nie jest kompletne
++mo¿esz opisaæ
++<code>TCP and IP</code> zamiast
++<code>TCP/IP</code>, ale mo¿e to byæ powodem zbyt wielu dopasowañ (szumu informacyjnego)
++
++<li>Dopasowania okrojonych s³ów i szukania po wybranych polach zabieraj±
++wiêcej czasu, ni¿ inne metody.
++
++<li>Je¿eli chcesz u¿ywaæ <code class="operator">and</code>,
++<code class="operator">or</code> lub <code
++class="operator">not</code> po prostu jako okre¶leñ, mo¿esz
++otoczyæ je odpowiednio podwójnym cudzys³owem tak, jak
++<code
++class="operator">"..."</code> lub klamrami tak, jak <code
++class="operator">{...}</code>.
++
++<!-- foo
++You must choose the latter with Tkanamzu or namazu.el.
++-->
++</ul>
++
+diff -urN namazu-2.0.12.orig/template/NMZ.foot.pl namazu-2.0.12/template/NMZ.foot.pl
+--- namazu-2.0.12.orig/template/NMZ.foot.pl	Thu Jan  1 01:00:00 1970
++++ namazu-2.0.12/template/NMZ.foot.pl	Tue Aug 26 00:25:29 2003
+@@ -0,0 +1,13 @@
++<hr>
++<p>
++Ten system wyszukiwania jest oparty na
++<strong><a href="http://www.namazu.org/">Namazu</a> <!-- VERSION --> v <!-- VERSION --></strong>
++</p>
++<p>T³umaczenie na jêzyk polski: Krzysztof Drewicz, Tomasz Wittner.</p>
++<address>
++<!-- ADDRESS -->
++<a href="mailto:foobar@namazu.org">foobar@namazu.org</a>
++<!-- ADDRESS -->
++</address>
++</body>
++</html>
+diff -urN namazu-2.0.12.orig/template/NMZ.head.pl namazu-2.0.12/template/NMZ.head.pl
+--- namazu-2.0.12.orig/template/NMZ.head.pl	Thu Jan  1 01:00:00 1970
++++ namazu-2.0.12/template/NMZ.head.pl	Tue Aug 26 00:28:18 2003
+@@ -0,0 +1,83 @@
++<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
++        "http://www.w3.org/TR/html4/strict.dtd">
++<html>
++<head>
++<!-- LINK-REV-MADE -->
++<link rev=made href="mailto:foobar@namazu.org">
++<!-- LINK-REV-MADE -->
++<META http-equiv="Content-Type" content="text/html; charset=iso-8859-2">
++<title>Namazu: System Wyszukiwania Pe³notekstowego </title>
++<style type="text/css"><!--
++  strong.keyword { color: Red; }
++  p.example      { text-indent: 1em;
++                   color: Navy;
++		   font-weight: bold;
++                   font-family: monospace; }
++  code           { color: Navy;
++                   font-family: monospace; }
++  code.example   { color: Navy;
++		   font-weight: bold;
++                   font-family: monospace; }
++  code.operator  { color: Navy;
++                   font-family: monospace;
++		   font-weight: bold; }
++--></style>
++</head>
++<body lang="pl">
++<h1>Namazu: System Wyszukiwania Pe³notekstowego</h1>
++<p>
++Ten indeks zawiera <!-- FILE --> 0 <!-- FILE --> dokumentów i
++<!-- KEY --> 0 <!-- KEY --> s³ów kluczowych.
++</p>
++<p>
++<strong>Ostatnio zmodyfikowano: <!-- DATE --> date <!-- DATE --></strong>
++</p>
++<hr>
++<form method="GET" action="{cgi}">
++<p>
++<strong>Query:</strong>
++<input type="text" name="query" size="40">
++<input type="submit" value="Szukaj!">
++<!-- <input type="hidden" name="idxname" value="foobar"> -->
++<a href="{cgi}">[Pomoc, jak szukaæ.]</a>
++</p>
++<p>
++<strong>Pokazuj:</strong>
++<select name="max">
++<option value="10">10
++<option selected value="20">20
++<option value="30">30
++<option value="50">50
++<option value="100">100
++</select>
++<strong>Opis:</strong>
++<select name="result">
++<option selected value="normal">normalny
++<option value="short">skrócony
++</select>
++<strong>Kryterium sortowania:</strong>
++<select name="sort">
++<option selected value="score">wynik
++<option value="date:late">data, od najnowszych
++<option value="date:early">data, od najstarszych
++<option value="field:subject:ascending">tytu³, w porz±dku rosn±cym
++<option value="field:subject:descending">tytu³, w porz±dku malej±cym
++<option value="field:from:ascending">autor, w porz±dku rosn±cym
++<option value="field:from:descending">autor, w porz±dku malej±cym
++<option value="field:size:ascending">rozmiar, w porz±dku rosn±cym
++<option value="field:size:descending">rozmiar, w porz±dku malej±cym
++<option value="field:uri:ascending">URI, w porz±dku rosn±cym
++<option value="field:uri:descending">URI, w porz±dku malej±cym
++</select>
++</p>
++<!--
++<p>
++<strong>Cel:</strong>
++<ul>
++<li><input type="checkbox" name="idxname" value="foo" checked>aptgept
++<li><input type="checkbox" name="idxname" value="bar">fooshmoo
++<li><input type="checkbox" name="idxname" value="baz">grepgzip
++</ul>
++</p>
++-->
++</form>
+diff -urN namazu-2.0.12.orig/template/NMZ.result.normal.pl namazu-2.0.12/template/NMZ.result.normal.pl
+--- namazu-2.0.12.orig/template/NMZ.result.normal.pl	Thu Jan  1 01:00:00 1970
++++ namazu-2.0.12/template/NMZ.result.normal.pl	Mon Aug 25 23:52:21 2003
+@@ -0,0 +1,5 @@
++<dt>${namazu::counter}. <strong><a href="${uri}">${title}</a></strong> (wynik: ${namazu::score})
++<dd><strong>Autor</strong>: <em>${author}</em>
++<dd><strong>Data</strong>: <em>${date}</em>
++<dd>${summary}
++<dd><a href="${uri}">${uri}</a> (${size} bajtów)<br><br>
+diff -urN namazu-2.0.12.orig/template/NMZ.result.short.pl namazu-2.0.12/template/NMZ.result.short.pl
+--- namazu-2.0.12.orig/template/NMZ.result.short.pl	Thu Jan  1 01:00:00 1970
++++ namazu-2.0.12/template/NMZ.result.short.pl	Mon Aug 25 23:52:21 2003
+@@ -0,0 +1,2 @@
++<dt>${namazu::counter}. <strong><a href="${uri}">${title}</a></strong> (wynik: ${namazu::score})
++<dd><a href="${uri}">${uri}</a> (${size} bajtów)<br><br>
+diff -urN namazu-2.0.12.orig/template/NMZ.tips.pl namazu-2.0.12/template/NMZ.tips.pl
+--- namazu-2.0.12.orig/template/NMZ.tips.pl	Thu Jan  1 01:00:00 1970
++++ namazu-2.0.12/template/NMZ.tips.pl	Tue Aug 26 00:24:15 2003
+@@ -0,0 +1,61 @@
++<h2><a name="tips">Porady dotycz±ce wyszukiwania</a></h2>
++
++<p>
++Je¿eli masz problem ze znalezieniem podanej przez Ciebie informacji, spróbuj zastosowaæ poni¿sze rady
++</p>
++
++<ul>
++<li>Sprawd¼ pisowniê podanych s³ów-kluczy<br>
++Namazu nic nie znajdzie z b³êdami w pisowni.
++
++<li>Dodaj s³ów-kluczy<br>
++
++Je¿eli nie otrzymujesz wyników, lub otrzymujesz ich za ma³o, mo¿esz dodaæ jedno
++lub wiêcej pokrewnych s³ów z operatorem
++<code
++class="operator">or</code> . Powiniene¶ otrzymaæ wiêcej rezultatów np.:
++<br>
++<code class="example">tex or ptex or latex or latex2e</code><br>
++
++Je¿eli otrzymujesz za du¿o wynikow, mo¿esz dodaæ jedno lub wiêcej
++pokrewnych s³ów z operatorem
++<code class="operator">and</code>
++. To ograniczy bardziej zakres przeszukiwania np.:<br>
++<code class="example">latex and dvi2ps and eps</code>
++
++<li>Spróbuj wyszukiwania okrojonych s³ów<br>
++
++Je¿eli nie otrzymujesz wyników, lub otrzymujesz ich za ma³o, mo¿esz spróbowaæ
++dopasowywania okrojonych s³ów.
++Mo¿esz wyszczególniæ <code class="example">tex*</code> dla wyszukania okre¶leñ zaczynaj±cych siê na
++<code>tex</code> (e.g., <code>tex</code>,
++<code>texi2html</code>,
++<code>texindex</code>, <code>text</code>).
++<br>
++Mo¿esz wyszczególniæ<code class="example">*tex</code> to
++wyszukiwanie dla okre¶leñ koñcz±cych siê na
++<code>tex</code> (np.:
++<code>bibtex</code>,
++<code>jlatex</code>, <code>latex</code>,
++<code>platex</code>, <code>ptex</code>, <code>vertex</code>).
++<br>
++
++Mo¿esz wyszczególniæ <code class="example">*tex*</code> to
++wyszukiwanie dla okre¶leñ zawieraj±cych
++<code>tex</code> (wiele).
++<br>
++
++<li>Spróbowa³e¶ wyszukiwania fraz, ale to nie zwróci³o ¿adnych wyników zawieraj±cych twoj± frazê?
++<br>
++To jest usterka Namazu. Precyzja wyszukiwania fraz nie jest
++100%, ale z³e wyniki s± rzadkie.
++
++<li>Je¿eli chcesz u¿yæ <code class="operator">and</code>,
++<code class="operator">or</code> lub <code
++class="operator">not</code> jako zwyk³ych s³ów-kluczy <br>
++mo¿esz otoczyæ je odpowiednio podwójnymi cudzys³owami tak, jak
++<code
++class="operator">"..."</code> or braces like <code
++class="operator">{...}</code>.
++
++</ul>
