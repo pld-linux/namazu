@@ -28,6 +28,8 @@ Requires:	perl-Text-Kakasi >= 1.00
 Requires:	perl-modules >= 5.6.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define	_noautoreq	'perl(Text::ChaSen)'
+
 # XXX is this right - it was /var/lib before FHS macros
 %define _localstatedir	/var/lib
 %define _libexecdir	/home/services/httpd/cgi-bin
