@@ -10,6 +10,7 @@ Source0:	http://www.namazu.org/stable/%{name}-%{version}.tar.gz
 # Source0-md5:	516bf2d732230184814761cd1ae20d6c
 Patch0:		%{name}-2.0.5-linguas.patch
 Patch1:		%{name}-2.0.6-newgettext3.patch
+Patch2:		%{name}-translation-pl.patch
 URL:		http://www.namazu.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -84,6 +85,7 @@ Interfejs CGI do Namazu.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__gettextize}
