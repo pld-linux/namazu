@@ -219,7 +219,7 @@ diff -urN namazu-2.0.12.orig/template/NMZ.foot.pl namazu-2.0.12/template/NMZ.foo
 +Ten system wyszukiwania jest oparty na
 +<strong><a href="http://www.namazu.org/">Namazu</a> <!-- VERSION --> v <!-- VERSION --></strong>
 +</p>
-+<p>T³umaczenie na jêzyk polski: Krzysztof Drewicz, Tomasz Wittner.</p>
++<p>T³umaczenia na jêzyk polski dokonali w roku 2002 Krzysztof Drewicz i Tomasz Wittner.</p>
 +<address>
 +<!-- ADDRESS -->
 +<a href="mailto:foobar@namazu.org">foobar@namazu.org</a>
