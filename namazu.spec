@@ -8,6 +8,8 @@ License:	GPL
 Group:		Applications/Text
 Source0:	http://www.namazu.org/stable/%{name}-%{version}-1.tar.gz
 # Source0-md5:	335ef8f4faecae4a30954f50af356ac0
+Source1:	http://mm.tkikuchi.net/pipermail.pl
+# Source1-md5:	d49f69f964d193a7aeb2cf11edf63a69
 Patch0:		%{name}-linguas.patch
 Patch1:		%{name}-newgettext3.patch
 Patch2:		%{name}-emailaddress.patch
@@ -111,6 +113,8 @@ install -d $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/%{name}/filter/pipermail.pl
 
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/namazu/namazurc-sample \
 	$RPM_BUILD_ROOT%{_sysconfdir}/namazu/namazurc
