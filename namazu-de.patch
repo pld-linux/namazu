@@ -1,0 +1,32 @@
+diff -ruN namazu-2.0.13.orig/template/NMZ.head.de namazu-2.0.13/template/NMZ.head.de
+--- namazu-2.0.13.orig/template/NMZ.head.de	2002-07-11 16:20:02.000000000 +0900
++++ namazu-2.0.13/template/NMZ.head.de	2004-04-16 15:54:38.547695254 +0900
+@@ -22,14 +22,14 @@
+ 		   font-weight: bold; }
+ --></style>
+ </head>
+-<body lang="dn">
++<body lang="de">
+ <h1>Namazu: eine Volltext-Suchmaschine</h1>
+ <p>
+-Dieser Index enthält <!-- FILE --> 0 <!-- FILE --> Dokumente und
++Dieser Index enth&auml;lt <!-- FILE --> 0 <!-- FILE --> Dokumente und
+ <!-- KEY --> 0 <!-- KEY --> Keywords. 
+ </p>
+ <p>
+-<strong>Zuletzt verändert: <!-- DATE --> date <!-- DATE --></strong>
++<strong>Zuletzt ver&auml;ndert: <!-- DATE --> date <!-- DATE --></strong>
+ </p>
+ <hr>
+ <form method="GET" action="{cgi}">
+@@ -63,8 +63,8 @@
+ <option value="field:subject:descending">nach Titel, fallend</option>
+ <option value="field:from:ascending">nach Autor, aufsteigend</option>
+ <option value="field:from:descending">nach Autor, fallend</option>
+-<option value="field:size:ascending">nach Größe, aufsteigend</option>
+-<option value="field:size:descending">nach Größe, fallend</option>
++<option value="field:size:ascending">nach Gr&ouml;&szlig;e, aufsteigend</option>
++<option value="field:size:descending">nach Gr&ouml;&szlig;e, fallend</option>
+ <option value="field:uri:ascending">nach URI, aufsteigend</option>
+ <option value="field:uri:descending">nach URI, fallend</option>
+ </select>
