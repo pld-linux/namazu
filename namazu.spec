@@ -8,8 +8,8 @@ License:	GPL
 Group:		Applications/Text
 Source0:	http://www.namazu.org/stable/%{name}-%{version}.tar.gz
 # Source0-md5:	516bf2d732230184814761cd1ae20d6c
-Patch0:		%{name}-2.0.5-linguas.patch
-Patch1:		%{name}-2.0.6-newgettext3.patch
+Patch0:		%{name}-linguas.patch
+Patch1:		%{name}-newgettext3.patch
 Patch2:		%{name}-translation-pl.patch
 Patch3:		%{name}-emailaddress.patch
 Patch4:		%{name}-htmldoc.patch
