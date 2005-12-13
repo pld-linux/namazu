@@ -22,15 +22,15 @@ BuildRequires:	gettext-devel
 BuildRequires:	libtool
 BuildRequires:	perl-File-MMagic >= 1.12
 BuildRequires:	perl-NKF >= 1.71
-BuildRequires:	perl-Text-Kakasi >= 1.00
 BuildRequires:	perl-Text-ChaSen >= 1.03
+BuildRequires:	perl-Text-Kakasi >= 1.00
 BuildRequires:	perl-modules >= 5.6.0
 BuildRequires:	rpm-perlprov >= 4.1-13
 Requires:	kakasi >= 2.3.0
 Requires:	perl-File-MMagic >= 1.12
 Requires:	perl-NKF >= 1.71
-Requires:	perl-Text-Kakasi >= 1.00
 Requires:	perl-Text-ChaSen >= 1.03
+Requires:	perl-Text-Kakasi >= 1.00
 Requires:	perl-modules >= 5.6.0
 Conflicts:	mknmz-wwwoffle = 0.7.2-1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -127,7 +127,7 @@ mv -f $RPM_BUILD_ROOT%{_libexecdir}/%{name}.cgi \
 install -d html
 mv -f $RPM_BUILD_ROOT%{_datadir}/%{name}/doc/* html/
 rm -fr $RPM_BUILD_ROOT%{_datadir}/%{name}/etc
-	
+
 %find_lang %{name}
 
 %clean
@@ -138,10 +138,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS CREDITS ChangeLog* NEWS README THANKS TODO	
+%doc AUTHORS CREDITS ChangeLog* NEWS README THANKS TODO
 %doc etc/namazu.png html
 %lang(es) %doc README-es
-%lang(ja) %doc README-ja 
+%lang(ja) %doc README-ja
 %attr(755,root,root) %{_bindir}/namazu
 %attr(755,root,root) %{_bindir}/bnamazu
 %attr(755,root,root) %{_bindir}/*nmz
@@ -150,8 +150,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/nmzmerge
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
 %dir %{_sysconfdir}/namazu
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/namazu/namazurc
-%config(noreplace) %verify(not size mtime md5) %{_sysconfdir}/namazu/mknmzrc
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/namazu/namazurc
+%config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/namazu/mknmzrc
 %{_mandir}/man1/*
 %dir %{_datadir}/namazu
 %{_datadir}/namazu/filter
