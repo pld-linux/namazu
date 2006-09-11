@@ -55,7 +55,7 @@ przeszukiwania dla lokalnego dysku.
 Summary:	Header files for Namazu
 Summary(pl):	Pliki nag³ówkowe Namazu
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for Namazu.
@@ -67,7 +67,7 @@ Pliki nag³ówkowe Namazu.
 Summary:	Static Namazu library
 Summary(pl):	Statyczna biblioteka Namazu
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static Namazu library.
@@ -79,7 +79,7 @@ Statyczna biblioteka Namazu.
 Summary:	A CGI interface for Namazu
 Summary(pl):	Interfejs CGI do Namazu
 Group:		Applications/Text
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description cgi
 A CGI interface for Namazu.
