@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Namazu - a full-text search engine
-Summary(pl):	Namazu - silnik pe≥notekstowego przeszukiwania
+Summary(pl.UTF-8):   Namazu - silnik pe≈Çnotekstowego przeszukiwania
 Name:		namazu
 Version:	2.0.13
 Release:	3
@@ -45,46 +45,46 @@ Not only it works as CGI program for small or medium scale WWW search
 engine, but also works as personal use such as search system for local
 HDD.
 
-%description -l pl
-Namazu to silnik pe≥notekstowego przeszukiwania zrobiony z my∂l± o
-≥atwym uøytkowaniu. Dzia≥a nie tylko jako program CGI dla ma≥ych i
-∂rednich wyszukiwarek WWW, ale takøe jako prywatny system
+%description -l pl.UTF-8
+Namazu to silnik pe≈Çnotekstowego przeszukiwania zrobiony z my≈õlƒÖ o
+≈Çatwym u≈ºytkowaniu. Dzia≈Ça nie tylko jako program CGI dla ma≈Çych i
+≈õrednich wyszukiwarek WWW, ale tak≈ºe jako prywatny system
 przeszukiwania dla lokalnego dysku.
 
 %package devel
 Summary:	Header files for Namazu
-Summary(pl):	Pliki nag≥Ûwkowe Namazu
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe Namazu
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for Namazu.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe Namazu.
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe Namazu.
 
 %package static
 Summary:	Static Namazu library
-Summary(pl):	Statyczna biblioteka Namazu
+Summary(pl.UTF-8):   Statyczna biblioteka Namazu
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static Namazu library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka Namazu.
 
 %package cgi
 Summary:	A CGI interface for Namazu
-Summary(pl):	Interfejs CGI do Namazu
+Summary(pl.UTF-8):   Interfejs CGI do Namazu
 Group:		Applications/Text
 Requires:	%{name} = %{version}-%{release}
 
 %description cgi
 A CGI interface for Namazu.
 
-%description cgi -l pl
+%description cgi -l pl.UTF-8
 Interfejs CGI do Namazu.
 
 %prep
