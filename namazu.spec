@@ -1,6 +1,6 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	Namazu - a full-text search engine
-Summary(pl.UTF-8):   Namazu - silnik pełnotekstowego przeszukiwania
+Summary(pl.UTF-8):	Namazu - silnik pełnotekstowego przeszukiwania
 Name:		namazu
 Version:	2.0.13
 Release:	3
@@ -53,7 +53,7 @@ przeszukiwania dla lokalnego dysku.
 
 %package devel
 Summary:	Header files for Namazu
-Summary(pl.UTF-8):   Pliki nagłówkowe Namazu
+Summary(pl.UTF-8):	Pliki nagłówkowe Namazu
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
@@ -65,7 +65,7 @@ Pliki nagłówkowe Namazu.
 
 %package static
 Summary:	Static Namazu library
-Summary(pl.UTF-8):   Statyczna biblioteka Namazu
+Summary(pl.UTF-8):	Statyczna biblioteka Namazu
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
@@ -77,7 +77,7 @@ Statyczna biblioteka Namazu.
 
 %package cgi
 Summary:	A CGI interface for Namazu
-Summary(pl.UTF-8):   Interfejs CGI do Namazu
+Summary(pl.UTF-8):	Interfejs CGI do Namazu
 Group:		Applications/Text
 Requires:	%{name} = %{version}-%{release}
 
