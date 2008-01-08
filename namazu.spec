@@ -3,7 +3,7 @@ Summary:	Namazu - a full-text search engine
 Summary(pl.UTF-8):	Namazu - silnik pełnotekstowego przeszukiwania
 Name:		namazu
 Version:	2.0.13
-Release:	4
+Release:	5
 License:	GPL
 Group:		Applications/Text
 Source0:	http://www.namazu.org/stable/%{name}-%{version}-1.tar.gz
@@ -149,6 +149,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/nmzgrep
 %attr(755,root,root) %{_bindir}/nmzmerge
 %attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libnmz.so.7
 %dir %{_sysconfdir}/namazu
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/namazu/namazurc
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/namazu/mknmzrc
