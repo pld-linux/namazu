@@ -129,3 +129,14 @@
      for my $cand (("LC_ALL", "LC_CTYPE", "LANG")) {
  	if (defined($ENV{$cand})) {
  	    $util::LANG = $ENV{$cand};
+--- namazu-2.0.13/configure.in~	2008-01-08 19:27:15.052558352 +0100
++++ namazu-2.0.13/configure.in	2008-01-08 19:31:22.162241732 +0100
+@@ -87,7 +87,7 @@
+ dnl *
+ ALL_LINGUAS="ja es fr"
+ AM_GNU_GETTEXT([external])
+-AM_LC_MESSAGES
++gt_LC_MESSAGES
+ 
+ dnl For latest gettext
+ DATADIRNAME=share
