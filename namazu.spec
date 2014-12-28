@@ -18,7 +18,7 @@ Patch4:		%{name}-de.patch
 URL:		http://www.namazu.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	libtool
 BuildRequires:	perl-File-MMagic >= 1.12
 BuildRequires:	perl-NKF >= 1.71
