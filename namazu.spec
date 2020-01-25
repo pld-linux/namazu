@@ -1,4 +1,3 @@
-%include	/usr/lib/rpm/macros.perl
 Summary:	Namazu - a full-text search engine
 Summary(pl.UTF-8):	Namazu - silnik pełnotekstowego przeszukiwania
 Name:		namazu
